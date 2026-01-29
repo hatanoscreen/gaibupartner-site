@@ -1,0 +1,1007 @@
+@charset "UTF-8";
+
+/* ========================================
+   リセット & ベーススタイル
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* カラーパレット - ライト＆クリーンテーマ */
+    --gold-primary: #B8964E;
+    /* 少し濃いめにして白背景での視認性確保 */
+    --gold-light: #C9A961;
+    --gold-dark: #8B7355;
+
+    --light-bg: #FFFFFF;
+    --light-bg-alt: #F9FAFB;
+
+    --text-primary: #333333;
+    --text-secondary: #666666;
+
+    --card-bg: #FFFFFF;
+    --card-border: #EEEEEE;
+
+    --accent-gradient: linear-gradient(135deg, #C9A961 0%, #8B7355 100%);
+    --accent-gradient-text: linear-gradient(135deg, #B8964E 0%, #8B7355 100%);
+
+    /* シャドウ */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 20px rgba(201, 169, 97, 0.2);
+
+    /* トランジション */
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.4s ease;
+}
+
+body {
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--text-primary);
+    line-height: 1.8;
+    overflow-x: hidden;
+    letter-spacing: 0.05em;
+}
+
+/* ========================================
+   ヘッダー
+   ======================================== */
+header {
+    background: transparent;
+    padding: 1rem 2rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.4s ease;
+}
+
+header.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    height: 48px;
+    object-fit: contain;
+
+    /* 背景画像上で白文字が見えるように影をつける */
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
+
+
+
+.cta-button {
+    background: var(--accent-gradient);
+    color: #FFFFFF;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.05em;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.3), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(201, 169, 97, 0.4);
+}
+
+.cta-button:hover::after {
+    opacity: 1;
+}
+
+.header-cta {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.5rem;
+}
+
+/* ========================================
+   ヒーローセクション
+   ======================================== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    background:
+        linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.7)),
+        url('hero-bg.png') no-repeat center center/cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    /* 旧実装の削除（念のため残すか迷うが、今回はhero-overlayで完全に上書きするため削除でも良いが、overlayクラスで制御する） */
+    display: none;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('hero_bg_v2.jpg');
+    background-size: 100% 100%;
+    background-position: center;
+    z-index: 0;
+    /* Ken Burns Effect */
+    animation: none;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(20, 20, 20, 0.4) 0%, rgba(0, 0, 0, 0.8) 90%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-content {
+    max-width: 900px;
+    position: relative;
+    z-index: 2;
+    animation: fadeInUp 1s ease-out;
+}
+
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-tag {
+    display: inline-block;
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-light);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    background: rgba(10, 10, 10, 0.3);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    line-height: 1.2;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero .subtitle {
+    font-size: 1.3rem;
+    color: var(--gold-light);
+    margin-bottom: 2rem;
+    font-weight: 500;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+    position: relative;
+}
+
+.stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 40px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.stat-number {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+.hero-cta {
+    min-width: 250px;
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+}
+
+/* ========================================
+   セクション共通
+   ======================================== */
+section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+section:nth-child(even) {
+    /* 交互に背景色を変える */
+    background: transparent;
+}
+
+/* 全体をラップするコンテナがないため、section自体の背景色指定は注意が必要。
+   ここではbody背景が白なので、特定のセクションにグレー背景を入れる実装にする */
+
+#benefits,
+#checkpoints,
+#company {
+    background: var(--light-bg-alt);
+    margin: 0 calc(50% - 50vw);
+    padding-left: calc(50vw - 550px);
+    padding-right: calc(50vw - 550px);
+    width: 100vw;
+}
+
+@media (max-width: 1140px) {
+
+    #benefits,
+    #checkpoints,
+    #company {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+section h2 {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #222;
+    font-weight: 800;
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--accent-gradient);
+}
+
+.section-desc {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-top: -2rem;
+    margin-bottom: 3rem;
+}
+
+/* ========================================
+   スタイル・コンポーネント
+   ======================================== */
+/* カード */
+.benefit-card,
+.info-card,
+.company-info,
+.form-container,
+.step {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
+}
+
+.benefit-card:hover,
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(201, 169, 97, 0.3);
+}
+
+/* グリッド */
+.benefits-grid,
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* メリット */
+.benefit-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: rgba(201, 169, 97, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: var(--transition-smooth);
+    color: var(--gold-primary);
+}
+
+.benefit-card:hover .benefit-icon-wrapper {
+    background: var(--gold-primary);
+    color: #fff;
+    transform: scale(1.1) rotate(5deg);
+}
+
+.benefit-svg {
+    width: 30px;
+    height: 30px;
+    stroke: currentColor;
+    /* currentColorを使用 */
+    transition: var(--transition-smooth);
+}
+
+.benefit-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #222;
+    font-weight: 700;
+}
+
+.benefit-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* 仕事内容・応募条件リスト */
+.work-container,
+.requirements-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.work-image,
+.requirements-image {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.work-image img,
+.requirements-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform var(--transition-smooth);
+}
+
+.work-image:hover img,
+.requirements-image:hover img {
+    transform: scale(1.05);
+}
+
+.work-list,
+.requirements-list {
+    background: #FFFFFF;
+    border-left: 4px solid var(--gold-primary);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+}
+
+.work-list ul,
+.requirements-list ul {
+    list-style: none;
+}
+
+.work-list li,
+.requirements-list li {
+    padding: 0.8rem 0;
+    padding-left: 2rem;
+    position: relative;
+    border-bottom: 1px solid #eee;
+    color: var(--text-primary);
+}
+
+.work-list li:last-child,
+.requirements-list li:last-child {
+    border-bottom: none;
+}
+
+.work-list li::before,
+.requirements-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.3rem;
+    width: 8px;
+    height: 8px;
+    background: var(--gold-primary);
+    border-radius: 50%;
+}
+
+.note {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 0.3rem;
+}
+
+.work-note {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* 報酬・支払い */
+.center-text {
+    text-align: center;
+}
+
+.payment-highlight {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin: 1rem 0 2rem;
+}
+
+.payment-divider {
+    width: 1px;
+    height: 60px;
+    background: #ddd;
+}
+
+.p-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.p-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold-primary);
+    line-height: 1.2;
+}
+
+.payment-note {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* アコーディオン (Checkpoints, FAQ) */
+.accordion {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.accordion-item {
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 1.5rem;
+    background: none;
+    border: none;
+    color: #222;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.accordion-header:hover {
+    background: #f9f9f9;
+}
+
+.accordion-header .icon {
+    font-size: 1.5rem;
+    color: var(--gold-primary);
+    font-weight: 300;
+    transition: transform var(--transition-fast);
+}
+
+.accordion-header.active .icon {
+    transform: rotate(45deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background: #fafafa;
+}
+
+.accordion-content p {
+    color: var(--text-secondary);
+    padding: 0 1.5rem 1.5rem;
+    font-size: 0.95rem;
+}
+
+/* 応募フロー */
+.flow-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    counter-reset: step;
+}
+
+.step {
+    position: relative;
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.step-num {
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(201, 169, 97, 0.15);
+    /* 薄いゴールド */
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    line-height: 1;
+}
+
+.step-content h3 {
+    font-size: 1.1rem;
+    color: #222;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+    font-weight: 700;
+}
+
+.step-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* 会社概要詳細 */
+.company-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.company-visual {
+    height: 100%;
+}
+
+.company-visual img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-md);
+    max-height: 600px;
+    /* あまり大きくなりすぎないように制限 */
+    margin: 0 auto;
+    display: block;
+}
+
+.company-info .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.company-info .info-item {
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0;
+}
+
+.company-info .info-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: var(--gold-dark);
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #333;
+}
+
+.company-extra {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.extra-item {
+    margin-bottom: 1.5rem;
+}
+
+.extra-item h4 {
+    color: var(--gold-primary);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    border-left: 3px solid var(--gold-primary);
+    padding-left: 0.8rem;
+}
+
+.extra-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+/* ポートフォリオ（制作実績） */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.portfolio-item {
+    position: relative;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    transition: all var(--transition-smooth);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+}
+
+.portfolio-item:hover {
+    transform: translateY(-8px);
+    border-color: var(--gold-light);
+    box-shadow: var(--shadow-md);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-smooth);
+}
+
+.portfolio-item:hover img {
+    transform: scale(1.05);
+}
+
+.portfolio-caption {
+    padding: 1.5rem;
+    background: #fff;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    border-top: 1px solid #f0f0f0;
+}
+
+.portfolio-caption h4 {
+    font-size: 1.1rem;
+    color: #222;
+    margin-bottom: 0.3rem;
+    font-weight: 700;
+}
+
+.portfolio-caption p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+
+/* フォーム */
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid var(--gold-light);
+    /* 薄いボーダー */
+    box-shadow: var(--shadow-lg);
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.required {
+    color: #d32f2f;
+    /* 赤色で見やすく */
+    margin-left: 0.3rem;
+    font-size: 0.8em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    background: #F9FAFB;
+    border: 1px solid #e0e0e0;
+    color: #333;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--gold-primary);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.1);
+}
+
+.form-group textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: normal !important;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.checkbox-label input[type="checkbox"] {
+    accent-color: var(--gold-primary);
+    width: 18px;
+    height: 18px;
+}
+
+.privacy-check {
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.text-link {
+    color: var(--gold-primary);
+    text-decoration: underline;
+}
+
+.submit-button {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    background: var(--accent-gradient);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    box-shadow: 0 4px 15px rgba(201, 169, 97, 0.3);
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(201, 169, 97, 0.4);
+}
+
+/* フッター */
+footer {
+    padding: 4rem 2rem;
+    text-align: center;
+    border-top: 1px solid #eee;
+    background: #fafafa;
+    color: #666;
+}
+
+.footer-links {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--gold-primary);
+}
+
+footer p {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* 固定CTA (モバイル用) */
+.sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    z-index: 999;
+    border-top: 1px solid #eee;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform var(--transition-smooth);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.sticky-cta.visible {
+    transform: translateY(0);
+}
+
+.sticky-cta .cta-button {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* アニメーション */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    .header-content {
+        justify-content: center;
+    }
+
+    .header-content .cta-button {
+        display: none;
+        /* モバイルではヘッダーCTAを隠して固定CTAに任せる */
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-stats {
+        gap: 2rem;
+    }
+
+    .stat-item:not(:last-child)::after {
+        display: none;
+    }
+
+    .payment-highlight {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .payment-divider {
+        width: 100px;
+        height: 1px;
+    }
+
+    .company-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .company-info .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .work-container,
+    .requirements-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* Sticky CTA 表示のためのスペース確保 */
+    body {
+        padding-bottom: 80px;
+    }
+}
