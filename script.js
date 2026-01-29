@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initDidScroll();
     initNumberAnimation();
     initAccordions();
-    // initFormValidation();
+
 });
 
 // ========================================
