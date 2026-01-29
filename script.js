@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initDidScroll();
     initNumberAnimation();
     initAccordions();
-    initFormValidation();
+    // initFormValidation();
 });
 
 // ========================================
@@ -154,13 +154,12 @@ function initAccordions() {
 // ========================================
 // フォームバリデーション
 // ========================================
+/*
 function initFormValidation() {
     const form = document.getElementById('applicationForm');
     if (!form) return;
 
     form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
         let isValid = true;
         const errors = [];
 
@@ -169,6 +168,8 @@ function initFormValidation() {
         requiredFields.forEach(field => {
             // チェックボックスの場合は個別にチェックしない（グループで見るため）
             if (field.type === 'checkbox') {
+                // Checkbox required attribute is not standard for groups, handled below
+                // But if individual required exists (like privacy policy), check it
                 if (!field.checked) {
                     isValid = false;
                     field.parentElement.style.color = '#ff6b6b'; // エラー時赤字
@@ -193,38 +194,26 @@ function initFormValidation() {
 
         groups.forEach(group => {
             const checkboxes = form.querySelectorAll(`input[name="${group.name}"]`);
-            const checked = Array.from(checkboxes).some(cb => cb.checked);
-            const container = checkboxes[0].closest('.checkbox-group');
+            if (checkboxes.length > 0) {
+                const checked = Array.from(checkboxes).some(cb => cb.checked);
+                const container = checkboxes[0].closest('.checkbox-group');
 
-            if (!checked) {
-                isValid = false;
-                container.style.border = '1px solid #ff6b6b';
-            } else {
-                container.style.border = 'none';
+                if (!checked) {
+                    isValid = false;
+                    container.style.border = '1px solid #ff6b6b';
+                } else {
+                    container.style.border = 'none';
+                }
             }
         });
 
         if (!isValid) {
+            e.preventDefault(); // バリデーションNGの場合のみ送信をキャンセル
             alert('入力内容に不備があります。赤枠の項目をご確認ください。');
             return;
         }
 
-        // 送信処理（ダミー）
-        const submitButton = form.querySelector('.submit-button');
-        const originalText = submitButton.textContent;
-
-        submitButton.textContent = '送信中...';
-        submitButton.disabled = true;
-
-        // 擬似的な通信遅延
-        setTimeout(() => {
-            alert('ご応募ありがとうございます！\n担当者より3営業日以内にご連絡いたします。');
-            form.reset();
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-
-            // サンクスページへの遷移などがあればここで行う
-            // window.location.href = '/thanks.html';
-        }, 1500);
+        // バリデーションOKなら、そのままフォーム送信（Formspreeへ）が行われます
     });
 }
+*/
